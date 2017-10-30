@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks®, 7.4 of December 5, 2005 on October 29, 2017 at 11:30:09 pm</time-stamp>
+<time-stamp>From VisualWorks®, 7.4 of December 5, 2005 on October 30, 2017 at 12:08:01 am</time-stamp>
 <!-- Package RPSApplications* -->
 
 
@@ -1653,7 +1653,11 @@
 	| pmCollection almClear tmInitial tmPump count pmFilename gasConfigFilePM maint1 gasConfigTable gasCheck gasCheckCollection a b c fileStream3 pmxContents z maint2 pmFilename2 afviFilename afvCheck afv1 tmContents tmCheck tmOrderCheck t1 newCount myCNT scnSize writeStream1 scenarioFile goldenArray |
 	scnName := Dialog 
 				request: 'Please enter scenario title in this format: CustomerCode_ToolID'
-				initialAnswer: 'Generic_ToolID'.
+				initialAnswer: 'Generic_ToolID' onCancel: ['Blank'].
+				
+ (scnName = 'Blank') ifTrue: [Dialog warn: 'Your scenario was not created!']
+ 
+ 	ifFalse:[
 	pmCollection := OrderedCollection new. 
 	"pmExists := OrderedCollection new."
 	
@@ -1879,7 +1883,7 @@
 			myCNT := myCNT + 1.
 			myCNT &lt;= scnSize] 
 					whileTrue."]"
- 
+
     Dialog warn: 'Your scenario can be found in the ', scnDir printString, ' directory'.
     
 	"This section copies over the SimTestPMx flows for ease of simulation"
@@ -1888,7 +1892,8 @@
 		ifTrue: 
 			[flws 
 				do: [:each | (flowsCopyDir , '\' , each) asFilename copyTo: flwDest , '\' , each]]
-		ifFalse: [Dialog warn: 'Flows directory does not exist on D:\Lam\data']</body>
+		ifFalse: [Dialog warn: 'Flows directory does not exist on D:\Lam\data']
+		].</body>
 
 <body package="RPSApplications" selector="setupSim">setupSim
 	
